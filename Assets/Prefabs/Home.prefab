@@ -122,6 +122,7 @@ GameObject:
   - component: {fileID: 5422311983253503610}
   - component: {fileID: 5045041418909285938}
   - component: {fileID: 7445575622676829674}
+  - component: {fileID: -1748242001142788942}
   m_Layer: 6
   m_Name: Home
   m_TagString: Untagged
@@ -223,3 +224,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-1748242001142788942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7845751081833869004}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3efabd9ee145746a8849dae7769348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frogInHome: {fileID: 4836690845992640269}
