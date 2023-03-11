@@ -21,6 +21,10 @@ public class Home : MonoBehaviour
         if (collision.tag == "Player")
         {
             enabled = true;
+
+            Frogger frogger = collision.GetComponent<Frogger>(); //this gets the component of the item the collided with the home i.e frogger
+            frogger.Respawn();
+            
         }
     }
 }

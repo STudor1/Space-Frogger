@@ -9,10 +9,12 @@ public class Frogger : MonoBehaviour
     [SerializeField] private Sprite leapSprite;
     [SerializeField] private Sprite deadSprite;
 
+    private Vector3 spawnPosition;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spawnPosition = transform.position;
     }
 
     private void Update()
@@ -102,9 +104,24 @@ public class Frogger : MonoBehaviour
 
     private void Death()
     {
+        StopAllCoroutines();
+
         transform.rotation = Quaternion.identity; //resets rotation, identity is like 0
-        enabled = false; //disables this so you can control frogger when you are dead
         spriteRenderer.sprite = deadSprite;
+        enabled = false; //disables this so you can control frogger when you are dead
+
+        Invoke(nameof(Respawn), 1f); //this calls respawn after 1 second
+    }
+
+    public void Respawn()
+    {
+        StopAllCoroutines();
+
+        transform.rotation = Quaternion.identity;
+        transform.position = spawnPosition;
+        spriteRenderer.sprite = idleSprite;
+        enabled = true;
+        
     }
 
     //This gets called when a collision has happened between our object and another object
