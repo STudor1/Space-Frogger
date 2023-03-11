@@ -23,7 +23,8 @@ public class Home : MonoBehaviour
             enabled = true;
 
             Frogger frogger = collision.GetComponent<Frogger>(); //this gets the component of the item the collided with the home i.e frogger
-            frogger.Respawn();
+            frogger.gameObject.SetActive(false);
+            frogger.Invoke(nameof(frogger.Respawn), 1f);
             
         }
     }
