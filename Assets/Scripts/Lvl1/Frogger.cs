@@ -7,6 +7,8 @@ public class Frogger : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite idleSprite;
     [SerializeField] private Sprite leapSprite;
+    [SerializeField] private Sprite deadSprite;
+
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class Frogger : MonoBehaviour
 
         Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
         Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
+        Collider2D obstacle = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Obstacle"));
 
         //This means that if there is a barrier on the next destination we return without doing the code after
         if (barrier != null)
@@ -57,7 +60,16 @@ public class Frogger : MonoBehaviour
         {
             transform.SetParent(null); //detach from platform
         }
-        StartCoroutine(Leap(destination));
+
+        if (obstacle != null && platform == null)
+        {
+            transform.position = destination; 
+            Death();
+        } else
+        {
+            StartCoroutine(Leap(destination));
+        }
+        
         //transform.position += direction;
     }
     
@@ -88,4 +100,21 @@ public class Frogger : MonoBehaviour
         spriteRenderer.sprite = idleSprite;
     }
 
+    private void Death()
+    {
+        transform.rotation = Quaternion.identity; //resets rotation, identity is like 0
+        enabled = false; //disables this so you can control frogger when you are dead
+        spriteRenderer.sprite = deadSprite;
+    }
+
+    //This gets called when a collision has happened between our object and another object
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //we first make sure our script is enabled(frogger is alive) and the layer
+        if (enabled && collision.gameObject.layer == LayerMask.NameToLayer("Obstacle") && transform.parent == null) {
+            Debug.Log("Frogger is dead");
+
+            Death();
+        }
+    }
 }
