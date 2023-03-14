@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject gameOverMenu;
+
     private Home[] homes;
     private Frogger frogger;
     private int score;
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour
     //Start fresh, 0 score, intial lives
     private void NewGame()
     {
+        gameOverMenu.SetActive(false);
+
         SetScore(0);
         SetLives(3);
         NewLevel();
@@ -78,7 +82,29 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        frogger.gameObject.SetActive(false); //turn frogger off
+        gameOverMenu.SetActive(true);
 
+        StopAllCoroutines();
+        StartCoroutine(PlayAgain());
+    }
+
+    //We need this coroutine do constantly check for input
+    private IEnumerator PlayAgain()
+    {
+        bool playAgain = false;
+
+        while (!playAgain)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                playAgain = true;
+            }
+
+            yield return null;
+        }
+
+        NewGame();
     }
 
     public void AdvancedRow()
