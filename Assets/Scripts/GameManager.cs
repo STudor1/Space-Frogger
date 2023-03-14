@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,7 @@ public class GameManager : MonoBehaviour
     private Frogger frogger;
     private int score;
     private int lives;
+    private int time;
 
     private void Awake()
     {
@@ -13,6 +15,10 @@ public class GameManager : MonoBehaviour
         frogger = FindObjectOfType<Frogger>();
     }
 
+    private void Start()
+    {
+        NewGame();
+    }
 
     //Start fresh, 0 score, intial lives
     private void NewGame()
@@ -37,15 +43,46 @@ public class GameManager : MonoBehaviour
     //Every time you occupy one home, you are starting a new round
     private void NewRound()
     {
+        Respawn();
+    }
+
+    private void Respawn()
+    {
         frogger.Respawn();
+
+        StopAllCoroutines();
+        StartCoroutine(Timer(30));
+    }
+
+    private IEnumerator Timer(int duration)
+    {
+        time = duration;
+
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1);
+
+            time--;
+        }
+
+        frogger.Death(); // if we didn't make it in time frogger dies
+    }
+
+    public void AdvancedRow()
+    {
+        SetScore(score + 10);
     }
 
     public void HomeOccupied()
     {
         frogger.gameObject.SetActive(false);
 
+        int bonusPoints = time * 20;
+        SetScore(score + bonusPoints + 50 );
+
         if (LevelCleared())
         {
+            SetScore(score + 1000);
             Invoke(nameof(NewLevel), 1f);
         }
         else
