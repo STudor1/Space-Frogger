@@ -116,7 +116,9 @@ public class Frogger : MonoBehaviour
         spriteRenderer.sprite = deadSprite;
         enabled = false; //disables this so you can control frogger when you are dead
 
-        Invoke(nameof(Respawn), 1f); //this calls respawn after 1 second
+        //Invoke(nameof(Respawn), 1f); //this calls respawn after 1 second
+
+        FindObjectOfType<GameManager>().Died();
     }
 
     public void Respawn()

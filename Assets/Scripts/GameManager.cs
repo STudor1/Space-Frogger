@@ -37,12 +37,6 @@ public class GameManager : MonoBehaviour
             homes[i].enabled = false; //acces all homes and set the state to un occupied 
         }
 
-        NewRound();
-    }
-
-    //Every time you occupy one home, you are starting a new round
-    private void NewRound()
-    {
         Respawn();
     }
 
@@ -68,6 +62,25 @@ public class GameManager : MonoBehaviour
         frogger.Death(); // if we didn't make it in time frogger dies
     }
 
+    public void Died()
+    {
+        SetLives(lives - 1);
+
+        if (lives > 0)
+        {
+            Invoke(nameof(Respawn), 1f);
+        }
+        else
+        {
+            Invoke(nameof(GameOver), 1f);
+        }
+    }
+
+    private void GameOver()
+    {
+
+    }
+
     public void AdvancedRow()
     {
         SetScore(score + 10);
@@ -87,7 +100,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(NewRound), 1f);
+            Invoke(nameof(Respawn), 1f);
         }
     }
 
