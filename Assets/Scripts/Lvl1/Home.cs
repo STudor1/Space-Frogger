@@ -22,10 +22,11 @@ public class Home : MonoBehaviour
         {
             enabled = true;
 
-            Frogger frogger = collision.GetComponent<Frogger>(); //this gets the component of the item the collided with the home i.e frogger
-            frogger.gameObject.SetActive(false);
-            frogger.Invoke(nameof(frogger.Respawn), 1f);
-            
+            //Frogger frogger = collision.GetComponent<Frogger>(); //this gets the component of the item the collided with the home i.e frogger
+            //frogger.gameObject.SetActive(false);
+            //frogger.Invoke(nameof(frogger.Respawn), 1f);
+
+            FindObjectOfType<GameManager>().HomeOccupied(); // we inform the game manager that the home has been occupied
         }
     }
 }
