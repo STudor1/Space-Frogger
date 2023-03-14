@@ -1,9 +1,13 @@
 using System.Collections;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private Text scoreText;
+    [SerializeField] private Text livesText;
+    [SerializeField] private Text timeText;
 
     private Home[] homes;
     private Frogger frogger;
@@ -55,12 +59,15 @@ public class GameManager : MonoBehaviour
     private IEnumerator Timer(int duration)
     {
         time = duration;
+        timeText.text = time.ToString();
 
         while (time > 0)
         {
             yield return new WaitForSeconds(1);
 
             time--;
+
+            timeText.text = time.ToString();
         }
 
         frogger.Death(); // if we didn't make it in time frogger dies
@@ -148,13 +155,13 @@ public class GameManager : MonoBehaviour
     private void SetScore(int score)
     {
         this.score = score;
-        //update ui
+        scoreText.text = score.ToString();
     }
 
     private void SetLives(int lives)
     {
         this.lives = lives;
-        //update ui
+        livesText.text = lives.ToString();
     }
 
 }
