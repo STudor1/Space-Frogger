@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private int score;
     private int lives;
     private int time;
+    private bool isPaused = false;
 
     private void Awake()
     {
@@ -24,6 +25,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NewGame();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isPaused = !isPaused;
+            Debug.Log("Game paused is " + isPaused);
+        }
     }
 
     //Start fresh, 0 score, intial lives
