@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject pausedMenu;
+    //[SerializeField] private Timer timer;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text livesText;
     [SerializeField] private Text timeText;
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int lives;
     private int time;
     private bool isPaused = false;
+    //private int time = 0;
 
     private void Awake()
     {
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NewGame();
+        InvokeRepeating("TickTimer", 0f, 1f);
     }
 
     private void Update()
@@ -32,14 +36,19 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
+            pausedMenu.SetActive(isPaused);
             Debug.Log("Game paused is " + isPaused);
         }
+
+        //Invoke();
+        //TickTimer();
     }
 
     //Start fresh, 0 score, intial lives
     private void NewGame()
     {
         gameOverMenu.SetActive(false);
+        pausedMenu.SetActive(false);
 
         SetScore(0);
         SetLives(3);
@@ -52,7 +61,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < homes.Length; i++)
         {
-            homes[i].enabled = false; //acces all homes and set the state to un occupied 
+            homes[i].enabled = false; //access all homes and set the state to un occupied 
         }
 
         Respawn();
@@ -63,7 +72,9 @@ public class GameManager : MonoBehaviour
         frogger.Respawn();
 
         StopAllCoroutines();
-        StartCoroutine(Timer(30));
+        StartTimer(30);
+        //timer.startTimer(30);
+        //StartCoroutine(Timer(30));
     }
 
     private IEnumerator Timer(int duration)
@@ -172,6 +183,40 @@ public class GameManager : MonoBehaviour
     {
         this.lives = lives;
         livesText.text = lives.ToString();
+    }
+
+    private void StartTimer(int duration)
+    {
+        time = duration;
+        timeText.text = time.ToString();
+        Debug.Log("Time set to " + duration);
+    }
+
+    private void TickTimer()
+    {
+        //Debug.Log("Tick Time " + time);
+        timeText.text = time.ToString();
+
+        if (time == 9999)
+        {
+            timeText.text = "0";
+            time = 9999;
+        } 
+        else if (time > 0 && !isPaused)
+        {
+            time--;
+            //Debug.Log("a " + time);
+
+            timeText.text = time.ToString();
+        }
+        
+        if(time == 0 && !isPaused)
+        {
+            time = 9999;
+            frogger.Death();
+        }
+
+        
     }
 
 }
