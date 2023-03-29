@@ -10,6 +10,7 @@ public class Lvl1MoveCycle : MonoBehaviour
 
     private Vector3 leftEdge;
     private Vector3 rightEdge;
+    private bool isPaused;
 
     private void Start()
     {
@@ -19,23 +20,29 @@ public class Lvl1MoveCycle : MonoBehaviour
 
     private void Update()
     {
-        //if > 0 moving to the right therefore check right edge
-        //taking the position 0 0 of the object and taking away the size since object can have different sizes
-        if (direction.x > 0 && (transform.position.x - size) > rightEdge.x) 
+        isPaused = FindObjectOfType<GameManager>().IsPaused();
+
+        if (!isPaused)
         {
-            Vector3 position = transform.position;
-            position.x = leftEdge.x - size;
-            transform.position = position;
+            //if > 0 moving to the right therefore check right edge
+            //taking the position 0 0 of the object and taking away the size since object can have different sizes
+            if (direction.x > 0 && (transform.position.x - size) > rightEdge.x)
+            {
+                Vector3 position = transform.position;
+                position.x = leftEdge.x - size;
+                transform.position = position;
+            }
+            else if (direction.x < 0 && (transform.position.x + size) < leftEdge.x)
+            {
+                Vector3 position = transform.position;
+                position.x = rightEdge.x + size;
+                transform.position = position;
+            }
+            else
+            {
+                transform.Translate(direction * speed * Time.deltaTime);
+            }
         }
-        else if (direction.x < 0 && (transform.position.x + size) < leftEdge.x)
-        {
-            Vector3 position = transform.position;
-            position.x = rightEdge.x + size;
-            transform.position = position;
-        }
-        else
-        {
-            transform.Translate(direction * speed * Time.deltaTime);
-        }
+        
     }
 }
