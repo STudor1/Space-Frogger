@@ -21,7 +21,7 @@ public class Frogger : MonoBehaviour
 
     private void Update()
     {
-        isPaused = FindObjectOfType<GameManager>().IsPaused();
+        //isPaused = FindObjectOfType<GameManager>().IsPaused();
 
         if (!isPaused)
         {
@@ -151,5 +151,10 @@ public class Frogger : MonoBehaviour
 
             Death();
         }
+    }
+
+    public void IsPaused(bool isPaused)
+    {
+        this.isPaused = isPaused;
     }
 }

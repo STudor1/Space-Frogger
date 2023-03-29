@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private Text livesText;
     [SerializeField] private Text timeText;
+    [SerializeField] private UnityEvent<bool> onPause; 
 
     private Home[] homes;
     private Frogger frogger;
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
         {
             isPaused = !isPaused;
             pausedMenu.SetActive(isPaused);
+            onPause?.Invoke(isPaused);
             Debug.Log("Game paused is " + isPaused);
         }
 

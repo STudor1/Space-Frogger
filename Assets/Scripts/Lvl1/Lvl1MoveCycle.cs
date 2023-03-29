@@ -20,7 +20,7 @@ public class Lvl1MoveCycle : MonoBehaviour
 
     private void Update()
     {
-        isPaused = FindObjectOfType<GameManager>().IsPaused();
+        //isPaused = FindObjectOfType<GameManager>().IsPaused();
 
         if (!isPaused)
         {
@@ -44,5 +44,10 @@ public class Lvl1MoveCycle : MonoBehaviour
             }
         }
         
+    }
+
+    public void IsPaused(bool isPaused)
+    {
+        this.isPaused = isPaused;
     }
 }
