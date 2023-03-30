@@ -2,15 +2,16 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pausedMenu;
     //[SerializeField] private Timer timer;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text livesText;
-    [SerializeField] private Text timeText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI livesText;
+    [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private UnityEvent<bool> onPause; 
 
     private Home[] homes;
