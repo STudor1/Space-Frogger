@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     private Home[] homes;
     private Frogger frogger;
+    private Lvl1MoveCycle[] gameEnvironment;
     private int score;
     private int lives;
     private int time;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     {
         homes = FindObjectsOfType<Home>();
         frogger = FindObjectOfType<Frogger>();
+        gameEnvironment = FindObjectsOfType<Lvl1MoveCycle>();
     }
 
     private void Start()
@@ -41,6 +43,11 @@ public class GameManager : MonoBehaviour
             isPaused = !isPaused;
             pausedMenu.SetActive(isPaused);
             onPause?.Invoke(isPaused);
+            for (int i = 0; i < gameEnvironment.Length; i++)
+            {
+                gameEnvironment[i].SendMessage("IsPaused", isPaused);
+            }
+
             Debug.Log("Game paused is " + isPaused);
         }
 
@@ -80,23 +87,6 @@ public class GameManager : MonoBehaviour
         StartTimer(30);
         //timer.startTimer(30);
         //StartCoroutine(Timer(30));
-    }
-
-    private IEnumerator Timer(int duration)
-    {
-        time = duration;
-        timeText.text = time.ToString();
-
-        while (time > 0)
-        {
-            yield return new WaitForSeconds(1);
-
-            time--;
-
-            timeText.text = time.ToString();
-        }
-
-        frogger.Death(); // if we didn't make it in time frogger dies
     }
 
     public void Died()
