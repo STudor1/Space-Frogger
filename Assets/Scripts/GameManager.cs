@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private int lives;
     private int time;
     private bool isPaused = false;
+    private bool isFrogActive;
     //private int time = 0;
 
     private void Awake()
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
     private void Respawn()
     {
         frogger.Respawn();
+        isFrogActive = true;
 
         StopAllCoroutines();
         StartTimer(30);
@@ -103,10 +105,12 @@ public class GameManager : MonoBehaviour
 
         if (lives > 0)
         {
+            isFrogActive = false;
             Invoke(nameof(Respawn), 1f);
         }
         else
         {
+            isFrogActive = false;
             Invoke(nameof(GameOver), 1f);
         }
     }
@@ -152,11 +156,13 @@ public class GameManager : MonoBehaviour
 
         if (LevelCleared())
         {
+            isFrogActive = false;
             SetScore(score + 1000);
             Invoke(nameof(NewLevel), 1f);
         }
         else
         {
+            isFrogActive = false;
             Invoke(nameof(Respawn), 1f);
         }
     }
@@ -197,7 +203,7 @@ public class GameManager : MonoBehaviour
 
     private void TickTimer()
     {
-        //Debug.Log("Tick Time " + time);
+        //Debug.Log("Tick Time " + isFrogActive);
         timeText.text = time.ToString();
 
         if (time == 9999)
@@ -205,7 +211,7 @@ public class GameManager : MonoBehaviour
             timeText.text = "0";
             time = 9999;
         } 
-        else if (time > 0 && !isPaused)
+        else if (time > 0 && !isPaused && isFrogActive)
         {
             time--;
             //Debug.Log("a " + time);
