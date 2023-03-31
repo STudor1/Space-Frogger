@@ -42,18 +42,24 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPaused = !isPaused;
-            pausedMenu.SetActive(isPaused);
-            onPause?.Invoke(isPaused);
-            for (int i = 0; i < gameEnvironment.Length; i++)
-            {
-                gameEnvironment[i].SendMessage("IsPaused", isPaused);
-            }
-
             Debug.Log("Game paused is " + isPaused);
+            PauseGame(isPaused);
         }
 
         //Invoke();
         //TickTimer();
+    }
+
+    private void PauseGame(bool _isPaused)
+    {
+        pausedMenu.SetActive(_isPaused);
+        onPause?.Invoke(_isPaused);
+        for (int i = 0; i < gameEnvironment.Length; i++)
+        {
+            gameEnvironment[i].SendMessage("IsPaused", _isPaused);
+        }
+
+        
     }
 
     //Start fresh, 0 score, intial lives
@@ -219,9 +225,13 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public bool IsPaused()
+    public void PausedPress()
     {
-        return isPaused;
+        isPaused = !isPaused;
+        PauseGame(isPaused);
+        Debug.Log("Pressed it");
     }
+
+    
 
 }
