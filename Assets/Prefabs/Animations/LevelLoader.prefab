@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4668256032813989051}
   - component: {fileID: 2492594248079653966}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: LevelLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 3665402655212362996}
   - component: {fileID: 9170330877217850355}
   - component: {fileID: 7692837468122464315}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &3665402655212362996
 MonoBehaviour:
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 6328120657133195387}
   - component: {fileID: 5549628424250220773}
   - component: {fileID: 5317654549868655721}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6420779999818556399}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
