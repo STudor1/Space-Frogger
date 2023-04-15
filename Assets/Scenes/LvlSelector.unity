@@ -2398,6 +2398,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: 765730518025554888, guid: 6a9dc0ea59e0e5a4eadc258ce00e56d5, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 2478909626464157112, guid: 6a9dc0ea59e0e5a4eadc258ce00e56d5, type: 3}
       propertyPath: m_Layer
       value: 31
