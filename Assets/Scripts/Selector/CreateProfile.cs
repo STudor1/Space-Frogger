@@ -5,6 +5,7 @@ using TMPro;
 public class CreateProfile : MonoBehaviour
 {
     [SerializeField] private GameObject usernameField;
+    [SerializeField] private ProfilesManager manager;
     private ProfileData newProfile;
 
     public void AddProfile()
@@ -20,6 +21,11 @@ public class CreateProfile : MonoBehaviour
         {
             Debug.Log("Enter a valid name");
         }
+    }
+
+    public void UpdateManager()
+    {
+        manager.UpdateManager();
     }
 
 }

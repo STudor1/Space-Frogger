@@ -7,5 +7,11 @@ using UnityEngine;
 /// </summary>
 public class ProfilesManager : MonoBehaviour
 {
-    
+    private ProfileData[] profiles;
+
+    public void UpdateManager()
+    {
+        //profiles = GetComponents<ProfileData>();
+        Debug.Log("There are " + /*profiles.Length +*/ " profiles");
+    }
 }
