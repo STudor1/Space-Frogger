@@ -48,7 +48,7 @@ public class ProfilesManager : MonoBehaviour
         }
 
         //profiles = GetComponents<ProfileData>();
-        Debug.Log("There are " + totalProfiles + " profiles");
+        Debug.Log("There are " + totalProfiles + " profiles " + username);
 
         //we need to do this whenever a new profile has been added 
 
