@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This will be used to keep a record of all profiles and be used to display the profiles in the level selector page
@@ -108,5 +109,10 @@ public class ProfilesManager : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         Debug.Log("Data has been reset");
+    }
+
+    public void SelectProfile()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

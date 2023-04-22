@@ -5,6 +5,11 @@ public class SelectorMenu : MonoBehaviour
 {
     public void PlayLevel1()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Lvl1");
+    }
+
+    public void GoBackToProfiles()
+    {
+        SceneManager.LoadScene("LvlSelector");
     }
 }
