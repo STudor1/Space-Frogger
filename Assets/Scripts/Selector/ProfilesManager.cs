@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// This will be used to keep a record of all profiles and be used to display the profiles in the level selector page
@@ -40,7 +41,9 @@ public class ProfilesManager : MonoBehaviour
                 GameObject button = (GameObject)Instantiate(buttonPrefab);
                 button.transform.SetPositionAndRotation(pos, rot);
                 button.transform.SetParent(canvas.transform);//Setting button parent
+                button.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString("Username" + (i + 1));
                 currentY = 540 + (-120 * i);
+                
             }
         }
         else
@@ -90,6 +93,7 @@ public class ProfilesManager : MonoBehaviour
             GameObject button = (GameObject)Instantiate(buttonPrefab);
             button.transform.SetPositionAndRotation(pos, rot);
             button.transform.SetParent(canvas.transform);//Setting button parent
+            button.GetComponentInChildren<TMP_Text>().text = username;
             currentY = currentY - 120;
         }
         else
