@@ -42,7 +42,7 @@ public class ProfileData
             PlayerPrefs.SetInt("levelUnlocked" + userID, levelUnlocked);
             PlayerPrefs.SetInt("Highscore" + userID, highscore);
 
-            manager.UpdateManagerName(PlayerPrefs.GetString("Username" + userID));
+            manager.UpdateManagerName(PlayerPrefs.GetString("Username" + userID), PlayerPrefs.GetInt("ID", userID));
 
             PlayerPrefs.SetInt("ID", userID + 1); //increment the id ready for next time we use it
 

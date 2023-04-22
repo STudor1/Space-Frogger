@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// This will be used to keep a record of all profiles and be used to display the profiles in the level selector page
@@ -15,6 +16,7 @@ public class ProfilesManager : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject canvas;
     private int currentY;
+    public static string selectedProfile;
 
     private void Start()
     {
@@ -44,6 +46,7 @@ public class ProfilesManager : MonoBehaviour
                 button.transform.SetPositionAndRotation(pos, rot);
                 button.transform.SetParent(canvas.transform);//Setting button parent
                 button.GetComponentInChildren<TMP_Text>().text = PlayerPrefs.GetString("Username" + (i + 1));
+                button.name = (i+1).ToString();
                 button.GetComponent<Button>().onClick.AddListener(SelectProfile);
                 currentY = 540 + (-120 * i);
                 
@@ -72,7 +75,7 @@ public class ProfilesManager : MonoBehaviour
 
 
     }
-    public void UpdateManagerName(string username)
+    public void UpdateManagerName(string username, int id)
     {
         //if (PlayerPrefs.GetInt("ID") == 0)
         //{
@@ -94,6 +97,7 @@ public class ProfilesManager : MonoBehaviour
             Vector3 pos = new Vector3(960, currentY - 120, 0); //this is 0 for some reason next at y + 120
             Quaternion rot = Quaternion.Euler(0, 0, 0);
             GameObject button = (GameObject)Instantiate(buttonPrefab);
+            button.name = id.ToString();
             button.transform.SetPositionAndRotation(pos, rot);
             button.transform.SetParent(canvas.transform);//Setting button parent
             button.GetComponentInChildren<TMP_Text>().text = username;
@@ -116,6 +120,11 @@ public class ProfilesManager : MonoBehaviour
 
     public void SelectProfile()
     {
+        GameObject selectedObject = EventSystem.current.currentSelectedGameObject;
+        string objectName = selectedObject.name;
+        Debug.Log("Selected object name: " + objectName);
+        selectedProfile = objectName;
+        //Debug.Log(this.GetComponentInChildren<TMP_Text>().text);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
