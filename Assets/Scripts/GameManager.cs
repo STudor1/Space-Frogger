@@ -22,10 +22,12 @@ public class GameManager : MonoBehaviour
     private int time;
     private bool isPaused = false;
     private bool isFrogActive;
+    private int selectedProfile;
     //private int time = 0;
 
     private void Awake()
     {
+        selectedProfile = int.Parse(ProfilesManager.selectedProfile);
         homes = FindObjectsOfType<Home>();
         frogger = FindObjectOfType<Frogger>();
         gameEnvironment = FindObjectsOfType<Lvl1MoveCycle>();
@@ -116,6 +118,21 @@ public class GameManager : MonoBehaviour
     {
         frogger.gameObject.SetActive(false); //turn frogger off
         gameOverMenu.SetActive(true);
+
+        string name = PlayerPrefs.GetString("Username" + selectedProfile);
+        int highscore = PlayerPrefs.GetInt("Highscore" + selectedProfile);
+
+        //if the current highscore is smaller than the current score, update the highscore
+        if (highscore < score)
+        {
+            PlayerPrefs.SetInt("Highscore" + selectedProfile, score);
+            Debug.Log("New highscore for " + name + ": " + score);
+        }
+        else
+        {
+            Debug.Log("Current highscore for " + name + " is " + highscore);
+        }
+        
 
         StopAllCoroutines();
         StartCoroutine(PlayAgain());
