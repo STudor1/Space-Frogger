@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Frogger : MonoBehaviour
+public class Frogger : MonoBehaviour, IEntity
 {
+    [SerializeField] private Frogger frogger;
+    private GameManager gameManager;
+    private InputHandler inputHandler;
     private SpriteRenderer spriteRenderer;
     [SerializeField] private Sprite idleSprite;
     [SerializeField] private Sprite leapSprite;
@@ -17,6 +20,8 @@ public class Frogger : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
+        inputHandler = GetComponent<InputHandler>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -25,78 +30,86 @@ public class Frogger : MonoBehaviour
 
         if (!isPaused)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.U)) //undo
+            {
+                inputHandler.UndoCommand();
+            }
+            else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
                 Rotation(0);
-                Move(Vector3.up);
+                //Move(Vector3.up);
+                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.up, gameManager, farthestRow, frogger));
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 Rotation(180);
-                Move(Vector3.down);
+                //Move(Vector3.down);
+                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.down, gameManager, farthestRow, frogger));
             }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 Rotation(90);
-                Move(Vector3.left);
+                //Move(Vector3.left);
+                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.left, gameManager, farthestRow, frogger));
             }
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
                 Rotation(-90);
-                Move(Vector3.right);
+                //Move(Vector3.right);
+                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.right, gameManager, farthestRow, frogger));
             }
         }
 
         
     }
 
-    private void Move(Vector3 direction)
-    {
-        Vector3 destination = transform.position + direction;
-
-        Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
-        Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
-        Collider2D obstacle = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Obstacle"));
-
-        //This means that if there is a barrier on the next destination we return without doing the code after
-        if (barrier != null)
-        {
-            return;
-        }
-
-        if (platform != null)
-        {
-            transform.SetParent(platform.transform); //attach our self to platform
-        } else
-        {
-            transform.SetParent(null); //detach from platform
-        }
-
-        if (obstacle != null && platform == null)
-        {
-            transform.position = destination; 
-            Death();
-        } else
-        {
-            if (destination.y > farthestRow)
-            {
-                farthestRow = destination.y;
-                FindObjectOfType<GameManager>().AdvancedRow();
-            }
-            StartCoroutine(Leap(destination));
-        }
-        
-        //transform.position += direction;
-    }
-    
     //This roatates Frogger in the direction based on the key pressed
     private void Rotation(float rotation)
     {
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
+    //private void Move(Vector3 direction)
+    //{
+    //    Vector3 destination = transform.position + direction;
+
+    //    Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
+    //    Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
+    //    Collider2D obstacle = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Obstacle"));
+
+    //    //This means that if there is a barrier on the next destination we return without doing the code after
+    //    if (barrier != null)
+    //    {
+    //        return;
+    //    }
+
+    //    if (platform != null)
+    //    {
+    //        transform.SetParent(platform.transform); //attach our self to platform
+    //    } else
+    //    {
+    //        transform.SetParent(null); //detach from platform
+    //    }
+
+    //    if (obstacle != null && platform == null)
+    //    {
+    //        transform.position = destination; 
+    //        Death();
+    //    } else
+    //    {
+    //        if (destination.y > farthestRow)
+    //        {
+    //            farthestRow = destination.y;
+    //            FindObjectOfType<GameManager>().AdvancedRow();
+    //        }
+    //        StartCoroutine(Leap(destination));
+    //    }
+
+    //    //transform.position += direction;
+    //}
+
     //We are leaping to the destination passed in
-    private IEnumerator Leap(Vector3 destination)
+    public IEnumerator Leap(Vector3 destination)
     {
         Vector3 startPosition = transform.position; //this grabs our current position
         float elapsedTime = 0f;
@@ -104,7 +117,7 @@ public class Frogger : MonoBehaviour
 
         spriteRenderer.sprite = leapSprite;
 
-        while(elapsedTime < duration)
+        while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
             transform.position = Vector3.Lerp(startPosition, destination, t);

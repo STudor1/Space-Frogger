@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2453054262306785132}
   - component: {fileID: 2453054262306785133}
   - component: {fileID: 1327333759727690269}
+  - component: {fileID: 6842964748507110063}
   m_Layer: 0
   m_Name: Frogger
   m_TagString: Player
@@ -149,3 +150,15 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: accdfca821fcfad4aa0e79fe4138f7df, type: 3}
   leapSprite: {fileID: 21300000, guid: c032d92b984378d4ebe60f300734cb08, type: 3}
   deadSprite: {fileID: 21300000, guid: 1695d102dbd9a5949a838586c2e47c81, type: 3}
+--- !u!114 &6842964748507110063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2453054262306785134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b00c5a1321bd54a936cd150f5e69b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
