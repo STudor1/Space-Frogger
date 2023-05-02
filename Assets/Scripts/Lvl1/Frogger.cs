@@ -6,11 +6,12 @@ using UnityEngine.Events;
 
 public class Frogger : MonoBehaviour, IEntity
 {
+    private IPlayerState currentState;
     [SerializeField] private Frogger frogger;
     private GameManager gameManager;
     private InputHandler inputHandler;
     private SpriteRenderer spriteRenderer;
-    [SerializeField] private Sprite idleSprite;
+    [SerializeField] public Sprite idleSprite;
     [SerializeField] private Sprite leapSprite;
     [SerializeField] private Sprite deadSprite;
 
@@ -29,6 +30,7 @@ public class Frogger : MonoBehaviour, IEntity
         spawnPosition = transform.position;
         inputHandler = GetComponent<InputHandler>();
         gameManager = FindObjectOfType<GameManager>();
+        currentState = new PlayerIdle();
     }
 
     private void Update()
@@ -43,35 +45,54 @@ public class Frogger : MonoBehaviour, IEntity
             }
             else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Rotation(0);
-                //Move(Vector3.up);
-                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.up, gameManager, farthestRow, frogger));
+                KeyCode input = KeyCode.W;
+                UpdateState(input);
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                Rotation(180);
-                //Move(Vector3.down);
-                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.down, gameManager, farthestRow, frogger));
+                KeyCode input = KeyCode.S;
+                UpdateState(input);
             }
             else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                Rotation(90);
-                //Move(Vector3.left);
-                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.left, gameManager, farthestRow, frogger));
+                KeyCode input = KeyCode.A;
+                UpdateState(input);
             }
             else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             {
-                Rotation(-90);
-                //Move(Vector3.right);
-                inputHandler.ExecuteCommand(new MoveCommand(this, Vector3.right, gameManager, farthestRow, frogger));
+                KeyCode input = KeyCode.D;
+                UpdateState(input);
             }
         }
 
         
     }
 
+    //Updates the current state frogger is in
+    private void UpdateState(KeyCode input)
+    {
+        IPlayerState newState = currentState.Tick(this.transform, input, frogger, gameManager, farthestRow, inputHandler);
+
+        if (newState != null)
+        {
+
+            currentState.Exit();
+            currentState = newState;
+            newState.Enter();
+
+            if (currentState.ToString() == "PlayerMoving")
+            {
+                newState = currentState.Tick(this.transform, input, frogger, gameManager, farthestRow, inputHandler);
+                currentState.Exit();
+                currentState = newState;
+                newState.Enter();
+            }
+
+        }
+    }
+
     //This roatates Frogger in the direction based on the key pressed
-    private void Rotation(float rotation)
+    public void Rotation(float rotation)
     {
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
