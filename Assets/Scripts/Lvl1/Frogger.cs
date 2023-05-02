@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class Frogger : MonoBehaviour, IEntity
 {
@@ -15,9 +17,14 @@ public class Frogger : MonoBehaviour, IEntity
     private Vector3 spawnPosition;
     private float farthestRow;
     private bool isPaused;
+    private int deathCount;
+    private int selectedProfile;
+
+    public static UnityEvent<Achievement> ach;
 
     private void Awake()
     {
+        selectedProfile = int.Parse(ProfilesManager.selectedProfile);
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
         inputHandler = GetComponent<InputHandler>();
@@ -69,45 +76,6 @@ public class Frogger : MonoBehaviour, IEntity
         transform.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
-    //private void Move(Vector3 direction)
-    //{
-    //    Vector3 destination = transform.position + direction;
-
-    //    Collider2D barrier = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Barrier"));
-    //    Collider2D platform = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Platform"));
-    //    Collider2D obstacle = Physics2D.OverlapBox(destination, Vector2.zero, 0f, LayerMask.GetMask("Obstacle"));
-
-    //    //This means that if there is a barrier on the next destination we return without doing the code after
-    //    if (barrier != null)
-    //    {
-    //        return;
-    //    }
-
-    //    if (platform != null)
-    //    {
-    //        transform.SetParent(platform.transform); //attach our self to platform
-    //    } else
-    //    {
-    //        transform.SetParent(null); //detach from platform
-    //    }
-
-    //    if (obstacle != null && platform == null)
-    //    {
-    //        transform.position = destination; 
-    //        Death();
-    //    } else
-    //    {
-    //        if (destination.y > farthestRow)
-    //        {
-    //            farthestRow = destination.y;
-    //            FindObjectOfType<GameManager>().AdvancedRow();
-    //        }
-    //        StartCoroutine(Leap(destination));
-    //    }
-
-    //    //transform.position += direction;
-    //}
-
     //We are leaping to the destination passed in
     public IEnumerator Leap(Vector3 destination)
     {
@@ -131,6 +99,15 @@ public class Frogger : MonoBehaviour, IEntity
 
     public void Death()
     {
+        deathCount = PlayerPrefs.GetInt("deathCount" + selectedProfile); //increase death count
+        deathCount++;
+        PlayerPrefs.SetInt("deathCount" + selectedProfile, deathCount);
+
+        if (deathCount == 10)
+        {
+            //ach?.Invoke();
+        }
+
         StopAllCoroutines();
 
         transform.rotation = Quaternion.identity; //resets rotation, identity is like 0

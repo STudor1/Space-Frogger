@@ -6,6 +6,7 @@ public class ProfileData
 {
     private int userID;
 
+    private int deathCount;
     private string username;
     private int levelUnlocked;
     private int highscore;
@@ -33,6 +34,7 @@ public class ProfileData
             userID = PlayerPrefs.GetInt("ID", 1);
             Debug.Log("Current id " + userID);
 
+            deathCount = 0;
             username = name;
             levelUnlocked = 1;
             highscore = 0;
@@ -41,6 +43,7 @@ public class ProfileData
             PlayerPrefs.SetString("Username" + userID, username);
             PlayerPrefs.SetInt("levelUnlocked" + userID, levelUnlocked);
             PlayerPrefs.SetInt("Highscore" + userID, highscore);
+            PlayerPrefs.SetInt("deathCount" + userID, deathCount);
 
             manager.UpdateManagerName(PlayerPrefs.GetString("Username" + userID), PlayerPrefs.GetInt("ID", userID));
 
