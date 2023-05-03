@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Achievement : ScriptableObject
 {
-    [SerializeField] private string achID;
+    [SerializeField] public string achID;
     [SerializeField] private string achDescription;
 
     private bool unlocked = false;
@@ -16,6 +16,7 @@ public class Achievement : ScriptableObject
 
     public void Unlock()
     {
+        Debug.Log("Unlocked " + achID);
         unlocked = true;
     }
 

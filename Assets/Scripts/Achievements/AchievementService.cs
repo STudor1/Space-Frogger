@@ -7,20 +7,32 @@ using UnityEngine;
 /// <summary>
 /// This is the observer, and frogger is the subject
 /// </summary>
-public class AchievementService : ScriptableObject
+public class AchievementService : MonoBehaviour
 {
     [SerializeField] private Achievement[] achievements; //list of our achievements
+    private Achievement DIE_10_TIMES;
 
-
-
-    private void OnEnable()
+    //Set all the achievements to their names;
+    private void Awake()
     {
-        //Frogger.ach += UnlockAchievement;
+        DIE_10_TIMES = achievements[0];
     }
 
+    //subscribe to event
+    private void OnEnable()
+    {
+        Frogger.OnDeath += OnDeath;
+    }
+
+    //unsubscribe from event
     private void OnDisable()
     {
-        
+        Frogger.OnDeath -= OnDeath;
+    }
+
+    private void OnDeath(int deathCount)
+    {
+        if (deathCount == 10) UnlockAchievement(DIE_10_TIMES);
     }
 
     private void UnlockAchievement(Achievement achievement)

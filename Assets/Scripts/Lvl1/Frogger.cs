@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 
 public class Frogger : MonoBehaviour, IEntity
@@ -20,8 +21,9 @@ public class Frogger : MonoBehaviour, IEntity
     private bool isPaused;
     private int deathCount;
     private int selectedProfile;
+    private AchievementService achievementSystem;
 
-    public static UnityEvent<Achievement> ach;
+    //public static UnityEvent<Achievement> ach;
 
     private void Awake()
     {
@@ -31,6 +33,7 @@ public class Frogger : MonoBehaviour, IEntity
         inputHandler = GetComponent<InputHandler>();
         gameManager = FindObjectOfType<GameManager>();
         currentState = new PlayerIdle();
+        achievementSystem = FindObjectOfType<AchievementService>();
     }
 
     private void Update()
@@ -118,16 +121,15 @@ public class Frogger : MonoBehaviour, IEntity
         spriteRenderer.sprite = idleSprite;
     }
 
+    public static event Action<int> OnDeath;
+
     public void Death()
     {
         deathCount = PlayerPrefs.GetInt("deathCount" + selectedProfile); //increase death count
         deathCount++;
         PlayerPrefs.SetInt("deathCount" + selectedProfile, deathCount);
 
-        if (deathCount == 10)
-        {
-            //ach?.Invoke();
-        }
+        OnDeath?.Invoke(deathCount);
 
         StopAllCoroutines();
 
