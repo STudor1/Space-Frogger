@@ -121,7 +121,7 @@ public class Frogger : MonoBehaviour, IEntity
         spriteRenderer.sprite = idleSprite;
     }
 
-    public static event Action<int> OnDeath;
+    public static event Action<int> OnDeath; //takes in an int - total death count
 
     public void Death()
     {

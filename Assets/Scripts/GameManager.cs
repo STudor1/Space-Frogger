@@ -3,9 +3,12 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    public static event Action<int> OnHomeEnter; //takes in an int - seconds left on counter
+    public static event Action<int> OnLevelFinish; //takes in an int - lives left
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject pausedMenu;
     //[SerializeField] private Timer timer;
@@ -172,11 +175,13 @@ public class GameManager : MonoBehaviour
         {
             isFrogActive = false;
             SetScore(score + 1000);
+            OnLevelFinish?.Invoke(lives);
             Invoke(nameof(NewLevel), 1f);
         }
         else
         {
             isFrogActive = false;
+            OnHomeEnter?.Invoke(time);
             Invoke(nameof(Respawn), 1f);
         }
     }

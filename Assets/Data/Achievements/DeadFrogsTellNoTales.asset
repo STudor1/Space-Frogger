@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8872827a551c0243bfe7a7c7ebbafcf, type: 3}
-  m_Name: Die10Times
+  m_Name: DeadFrogsTellNoTales
   m_EditorClassIdentifier: 
-  achID: Die_10_Times
-  achTitle: 10 Deaths
-  achDescription: Die 10 Times
+  achID: Dead_Frogs_Tell_No_Tales
+  achTitle: Dead Frogs Tell No Tales
+  achDescription: Finish a level without losing any lives.

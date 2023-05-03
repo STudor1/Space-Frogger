@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8872827a551c0243bfe7a7c7ebbafcf, type: 3}
-  m_Name: Die10Times
+  m_Name: GottaGoFast
   m_EditorClassIdentifier: 
-  achID: Die_10_Times
-  achTitle: 10 Deaths
-  achDescription: Die 10 Times
+  achID: Gotta_Go_Fast
+  achTitle: Gotta Go Fast
+  achDescription: Get home in under 10 seconds.
