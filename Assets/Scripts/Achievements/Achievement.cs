@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Achievement : ScriptableObject
 {
-    [SerializeField] private string achID;
+    [SerializeField] public string achID;
     [SerializeField] private string achTitle;
     [SerializeField] private string achDescription;
 

@@ -17,6 +17,8 @@ public class ProfileData
     {
         if (PlayerPrefs.GetInt("ID") < 4)
         {
+            Achievement[] allAch = Resources.LoadAll<Achievement>("Achievements");
+            Debug.Log(allAch.Length);
             manager = GameObject.Find("ProfilesManager").GetComponent<ProfilesManager>();
             //if (PlayerPrefs.HasKey("totalProfiles"))
             //{
@@ -44,6 +46,15 @@ public class ProfileData
             PlayerPrefs.SetInt("levelUnlocked" + userID, levelUnlocked);
             PlayerPrefs.SetInt("Highscore" + userID, highscore);
             PlayerPrefs.SetInt("deathCount" + userID, deathCount);
+
+            //Saving ach array
+            PlayerPrefs.SetInt("ach.length" + userID, allAch.Length);
+
+            for (int i = 0; i < allAch.Length; i++)
+            {
+                PlayerPrefs.SetString("ach" + userID, allAch[i].ToString());
+            }
+
 
             manager.UpdateManagerName(PlayerPrefs.GetString("Username" + userID), PlayerPrefs.GetInt("ID", userID));
 

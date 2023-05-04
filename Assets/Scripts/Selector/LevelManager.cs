@@ -14,7 +14,21 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Levels unlocked " + PlayerPrefs.GetInt("levelUnlocked" + selectedProfile));
         levelsUnlocked = PlayerPrefs.GetInt("levelUnlocked" + selectedProfile);
         Debug.Log("Highscore " + PlayerPrefs.GetInt("Highscore" + selectedProfile));
+
+        //Debug.Log("Achievements locked");
+        //for (int i = 0; i < PlayerPrefs.GetInt("ach.length" + selectedProfile); i++)
+        //{
+        //    Achievement ach = (Achievement)PlayerPrefs.GetString("ach" + selectedProfile);
+            
+        //}
+
+        //Debug.Log("Achievements unlocked");
+        //for (int i = 0; i < PlayerPrefs.GetInt("ach.length" + selectedProfile); i++)
+        //{
+
+        //}
+
     }
 
-    
+
 }
