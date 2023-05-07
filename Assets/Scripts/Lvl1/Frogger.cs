@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using System;
 
 
-public class Frogger : MonoBehaviour, IEntity
+public class Frogger : MonoBehaviour, IEntity, IDataPersistence
 {
     private IPlayerState currentState;
     [SerializeField] private Frogger frogger;
@@ -169,5 +169,15 @@ public class Frogger : MonoBehaviour, IEntity
     public void IsPaused(bool isPaused)
     {
         this.isPaused = isPaused;
+    }
+
+    public void LoadData(GameData data)
+    {
+        deathCount = data.deathCount;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.deathCount = deathCount;
     }
 }
