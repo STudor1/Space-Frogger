@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private TextMeshProUGUI timeText;
-    [SerializeField] private UnityEvent<bool> onPause; 
+    [SerializeField] private UnityEvent<bool> onPause;
 
+    public static event Action<int> OnDeath; //takes in an int - total death count
     private Home[] homes;
     private Frogger frogger;
     private Lvl1MoveCycle[] gameEnvironment;
@@ -26,14 +27,23 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     private bool isFrogActive;
     private int selectedProfile;
+    private SaveData data;
     //private int time = 0;
+    UserProfile currentUser;
+    private int deathCount;
+
 
     private void Awake()
     {
-        selectedProfile = int.Parse(ProfilesManager.selectedProfile);
+        selectedProfile = int.Parse(ProfileManagerJson.selectedProfile);
         homes = FindObjectsOfType<Home>();
         frogger = FindObjectOfType<Frogger>();
         gameEnvironment = FindObjectsOfType<Lvl1MoveCycle>();
+        data = FindObjectOfType<SaveData>();
+
+        //loading in the current player
+        currentUser = data.LoadProfile(selectedProfile);
+        Debug.Log("Playing as " + currentUser.username);
     }
 
     private void Start()
@@ -105,6 +115,14 @@ public class GameManager : MonoBehaviour
     {
         SetLives(lives - 1);
 
+        deathCount = currentUser.deathCount;
+        deathCount++;
+        currentUser.deathCount = deathCount;
+        data.SaveTheData(currentUser, currentUser.id);
+
+        OnDeath?.Invoke(deathCount);
+
+
         if (lives > 0)
         {
             isFrogActive = false;
@@ -122,13 +140,14 @@ public class GameManager : MonoBehaviour
         frogger.gameObject.SetActive(false); //turn frogger off
         gameOverMenu.SetActive(true);
 
-        string name = PlayerPrefs.GetString("Username" + selectedProfile);
-        int highscore = PlayerPrefs.GetInt("Highscore" + selectedProfile);
+        string name = currentUser.username;
+        int highscore = currentUser.highscore;
 
         //if the current highscore is smaller than the current score, update the highscore
         if (highscore < score)
         {
-            PlayerPrefs.SetInt("Highscore" + selectedProfile, score);
+            currentUser.highscore = score;
+            data.SaveTheData(currentUser, currentUser.id);
             Debug.Log("New highscore for " + name + ": " + score);
         }
         else

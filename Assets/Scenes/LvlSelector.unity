@@ -349,18 +349,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 294729036}
-        m_TargetAssemblyTypeName: CreateProfile, Assembly-CSharp
-        m_MethodName: UpdateManager
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &257174592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,7 +509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usernameField: {fileID: 568634965}
-  manager: {fileID: 608954548}
+  manager: {fileID: 0}
 --- !u!1 &489262269
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,7 +883,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 608954549}
-  - component: {fileID: 608954548}
+  - component: {fileID: 608954550}
   m_Layer: 0
   m_Name: ProfilesManager
   m_TagString: Untagged
@@ -903,20 +891,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &608954548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608954547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4002c91ae72b77a4b91add8f5cbbd6f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonPrefab: {fileID: 5530832111461252511, guid: c00dd512a730064408887cd173504b82, type: 3}
-  canvas: {fileID: 1007472967}
 --- !u!4 &608954549
 Transform:
   m_ObjectHideFlags: 0
@@ -930,8 +904,23 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &608954550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608954547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf61bf7d4b6e6204a9631cdc83a182c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonPrefab: {fileID: 844761247}
+  canvas: {fileID: 1007472967}
+  data: {fileID: 1596274303}
 --- !u!1 &775461061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,6 +1180,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &844761247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5530832111461252511, guid: c00dd512a730064408887cd173504b82, type: 3}
+  m_PrefabInstance: {fileID: 5530832109635095190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &993250616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,9 +1269,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 294729036}
-        m_TargetAssemblyTypeName: CreateProfile, Assembly-CSharp
-        m_MethodName: AddProfile
+      - m_Target: {fileID: 1596274303}
+        m_TargetAssemblyTypeName: SaveData, Assembly-CSharp
+        m_MethodName: SaveProfile
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1930,8 +1924,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 608954548}
-        m_TargetAssemblyTypeName: ProfilesManager, Assembly-CSharp
+      - m_Target: {fileID: 608954550}
+        m_TargetAssemblyTypeName: ProfileManagerJson, Assembly-CSharp
         m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
@@ -2188,6 +2182,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525509513}
   m_CullTransparentMesh: 1
+--- !u!1 &1596274302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1596274304}
+  - component: {fileID: 1596274303}
+  m_Layer: 0
+  m_Name: SaveSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1596274303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596274302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371ce2bae9366564c8af2dee39a3b5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameField: {fileID: 568634965}
+--- !u!4 &1596274304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596274302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785194030
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2750,7 @@ PrefabInstance:
     - target: {fileID: 5530832111461252509, guid: c00dd512a730064408887cd173504b82, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 608954548}
+      objectReference: {fileID: 0}
     - target: {fileID: 5530832111461252509, guid: c00dd512a730064408887cd173504b82, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

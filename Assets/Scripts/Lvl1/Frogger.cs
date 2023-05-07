@@ -22,18 +22,24 @@ public class Frogger : MonoBehaviour, IEntity
     private int deathCount;
     private int selectedProfile;
     private AchievementService achievementSystem;
+    private SaveData data;
+    UserProfile currentUser;
 
     //public static UnityEvent<Achievement> ach;
 
     private void Awake()
     {
-        selectedProfile = int.Parse(ProfilesManager.selectedProfile);
+        selectedProfile = int.Parse(ProfileManagerJson.selectedProfile);
         spriteRenderer = GetComponent<SpriteRenderer>();
         spawnPosition = transform.position;
         inputHandler = GetComponent<InputHandler>();
         gameManager = FindObjectOfType<GameManager>();
         currentState = new PlayerIdle();
         achievementSystem = FindObjectOfType<AchievementService>();
+
+        //loading in the current player
+        
+
     }
 
     private void Update()
@@ -121,16 +127,10 @@ public class Frogger : MonoBehaviour, IEntity
         spriteRenderer.sprite = idleSprite;
     }
 
-    public static event Action<int> OnDeath; //takes in an int - total death count
 
     public void Death()
     {
-        deathCount = PlayerPrefs.GetInt("deathCount" + selectedProfile); //increase death count
-        deathCount++;
-        PlayerPrefs.SetInt("deathCount" + selectedProfile, deathCount);
-
-        OnDeath?.Invoke(deathCount);
-
+        
         StopAllCoroutines();
 
         transform.rotation = Quaternion.identity; //resets rotation, identity is like 0

@@ -13,6 +13,9 @@ public class AchievementService : MonoBehaviour
     private Achievement DIE_10_TIMES;
     private Achievement GOTTA_GO_FAST;
     private Achievement DEAD_FROGS_TELL_NO_TALES;
+    private int selectedProfile;
+    private SaveData data;
+    UserProfile currentUser;
 
     //Set all the achievements to their names;
     private void Awake()
@@ -20,12 +23,16 @@ public class AchievementService : MonoBehaviour
         DIE_10_TIMES = achievements[0];
         GOTTA_GO_FAST = achievements[1];
         DEAD_FROGS_TELL_NO_TALES = achievements[2];
+
+        selectedProfile = int.Parse(ProfileManagerJson.selectedProfile);
+        data = FindObjectOfType<SaveData>();
+        currentUser = data.LoadProfile(selectedProfile);
     }
 
     //subscribe to event
     private void OnEnable()
     {
-        Frogger.OnDeath += OnDeath;
+        GameManager.OnDeath += OnDeath;
         GameManager.OnHomeEnter += OnHomeEnter;
         GameManager.OnLevelFinish += OnLevelFinish;
     }
@@ -33,7 +40,7 @@ public class AchievementService : MonoBehaviour
     //unsubscribe from event
     private void OnDisable()
     {
-        Frogger.OnDeath -= OnDeath;
+        GameManager.OnDeath -= OnDeath;
         GameManager.OnHomeEnter -= OnHomeEnter;
         GameManager.OnLevelFinish -= OnLevelFinish;
     }
@@ -60,7 +67,15 @@ public class AchievementService : MonoBehaviour
         if (!unlocked)
         {
             //unlock ach
-            achievement.Unlock();
+            //achievement.Unlock();
+            for (int i = 0; i < currentUser.achievements.Length; i++)
+            {
+                if (currentUser.achievements[i].achID == achievement.achID)
+                {
+                    currentUser.achievements[i].Unlock();
+                    //data.SaveTheData(currentUser, currentUser.id);
+                }
+            }
         }return;
     }
 
