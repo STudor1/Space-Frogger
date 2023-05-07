@@ -477,7 +477,6 @@ GameObject:
   m_Component:
   - component: {fileID: 294729035}
   - component: {fileID: 294729036}
-  - component: {fileID: 294729037}
   m_Layer: 5
   m_Name: CreateProfile
   m_TagString: Untagged
@@ -523,20 +522,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameField: {fileID: 568634965}
   manager: {fileID: 608954548}
---- !u!114 &294729037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294729034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d17345ffb644724da98f4a157caa9ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fileName: datasaved.game
-  usernameField: {fileID: 568634965}
 --- !u!1 &489262269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,8 +1275,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 294729037}
-        m_TargetAssemblyTypeName: DataPersistenceManager, Assembly-CSharp
+      - m_Target: {fileID: 294729036}
+        m_TargetAssemblyTypeName: CreateProfile, Assembly-CSharp
         m_MethodName: AddProfile
         m_Mode: 1
         m_Arguments:
