@@ -20,10 +20,10 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Levels unlocked " + currentUser.levelUnlocked);
         Debug.Log("Highscore " + currentUser.highscore);
 
-        foreach (Achievement ach in currentUser.achievements)
-        {
-            Debug.Log("Achievement " + ach.achID + " is unlocked " + ach.Unlocked);
-        }
+        //foreach (Achievement ach in currentUser.achievements)
+        //{
+        //    Debug.Log("Achievement " + ach.achID + " is unlocked " + ach.Unlocked);
+        //}
         
 
         //Debug.Log("Playing as " + PlayerPrefs.GetString("Username" + selectedProfile));

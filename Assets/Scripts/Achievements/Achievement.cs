@@ -5,11 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAchievement", 
     menuName = "Achievements/Achievement Data", order = 1)]
 
+[System.Serializable]
 public class Achievement : ScriptableObject
 {
     [SerializeField] public string achID;
-    [SerializeField] private string achTitle;
-    [SerializeField] private string achDescription;
+    [SerializeField] public string achTitle;
+    [SerializeField] public string achDescription;
 
     private bool unlocked = false;
 
@@ -20,5 +21,4 @@ public class Achievement : ScriptableObject
         Debug.Log("Unlocked " + achTitle + "\n" + achDescription);
         unlocked = true;
     }
-
 }

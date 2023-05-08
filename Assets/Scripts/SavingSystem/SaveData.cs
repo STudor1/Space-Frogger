@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using TMPro;
@@ -47,13 +47,17 @@ public class SaveData : MonoBehaviour
                 userProfile = new UserProfile(profileNo, text); //create a new profile
                 Debug.Log("Saving Data at " + savePath);
 
-                string json = JsonUtility.ToJson(userProfile);
-                Debug.Log(json);
+                string json = JsonUtility.ToJson(userProfile, true);
 
-                using (StreamWriter writer = new StreamWriter(savePath))
+                using (FileStream stream = new FileStream(savePath, FileMode.Create))
                 {
-                    writer.Write(json);
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(json);
+                    }
                 }
+
+                
 
                 profileNo++;
                 PlayerPrefs.SetInt("ProfileNo", profileNo);
@@ -80,6 +84,19 @@ public class SaveData : MonoBehaviour
             string json = reader.ReadToEnd();
 
             UserProfile user = JsonUtility.FromJson<UserProfile>(json);
+            Debug.Log("Loading " + user.username);
+            Debug.Log("Loading " + user.highscore);
+            foreach (Achievement ach in user.achievements)
+            {
+                if (ach.Unlocked == false)
+                {
+                    Debug.Log("Loading: Achievement " + ach.achTitle + " is not unlocked");
+                }
+                else
+                {
+                    Debug.Log("Loading: Achievement " + ach.achTitle + " is unlocked");
+                }
+            }
             return user;
         }
 
@@ -90,8 +107,12 @@ public class SaveData : MonoBehaviour
     {
         string savePath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "ProfileData" + id.ToString() + ".json";
 
-        string json = JsonUtility.ToJson(profile);
-        Debug.Log(json);
+        string json = JsonUtility.ToJson(profile, true);
+        Debug.Log("Then here ");
+        foreach (Achievement ach in profile.achievements)
+        {
+            Debug.Log("Saving: Achievement " + ach.achTitle + " is unlocked " + ach.Unlocked);
+        }
 
         using (StreamWriter writer = new StreamWriter(savePath))
         {
@@ -109,8 +130,10 @@ public class UserProfile
     public int deathCount;
     public int levelUnlocked;
     public int highscore;
-    public Achievement[] achievements;
+    [SerializeField] public List<Achievement> achievements;
 
+    //what i can try for this is create a dic with the ach id and unlocked or not and pass it as keys
+    // see this https://www.youtube.com/watch?v=aUi9aijvpgs&t=921s
     public UserProfile(int id, string username)
     {
         this.id = id;
@@ -118,10 +141,6 @@ public class UserProfile
         deathCount = 0;
         levelUnlocked = 1;
         highscore = 0;
-        achievements = Resources.LoadAll<Achievement>("Achievements");
-        if (achievements == null)
-        {
-            Debug.Log("Sad");
-        }
+        achievements = new List<Achievement>(Resources.LoadAll<Achievement>("Achievements"));
     }
 }

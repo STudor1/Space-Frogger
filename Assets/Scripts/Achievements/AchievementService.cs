@@ -24,9 +24,7 @@ public class AchievementService : MonoBehaviour
         GOTTA_GO_FAST = achievements[1];
         DEAD_FROGS_TELL_NO_TALES = achievements[2];
 
-        selectedProfile = int.Parse(ProfileManagerJson.selectedProfile);
-        data = FindObjectOfType<SaveData>();
-        currentUser = data.LoadProfile(selectedProfile);
+        
     }
 
     //subscribe to event
@@ -62,20 +60,38 @@ public class AchievementService : MonoBehaviour
 
     private void UnlockAchievement(Achievement achievement)
     {
+        selectedProfile = int.Parse(ProfileManagerJson.selectedProfile);
+        data = FindObjectOfType<SaveData>();
+        currentUser = data.LoadProfile(selectedProfile);
+        Debug.Log("Saving ach for " + currentUser.username);
+
         bool unlocked = CheckIfUnlocked(achievement);
 
         if (!unlocked)
         {
             //unlock ach
             //achievement.Unlock();
-            for (int i = 0; i < currentUser.achievements.Length; i++)
-            {
-                if (currentUser.achievements[i].achID == achievement.achID)
-                {
-                    currentUser.achievements[i].Unlock();
-                    //data.SaveTheData(currentUser, currentUser.id);
-                }
-            }
+            //for (int i = 0; i < currentUser.achievements.; i++)
+            //{
+            //    if (currentUser.achievements[i].achID == achievement.achID)
+            //    {
+            //        currentUser.achievements[i].Unlock();
+            //        Debug.Log(currentUser.achievements[i].Unlocked + " HEREEEEE");
+            //        data.SaveTheData(currentUser, currentUser.id);
+            //    }
+            //}
+
+            //foreach (Achievement ach in currentUser.achievements)
+            //{
+            //    if (ach.achTitle == achievement.achTitle)
+            //    {
+                    
+
+            //        ach.Unlock();
+            //        Debug.Log(ach.Unlocked + " HEREEEEE");
+            //        data.SaveTheData(currentUser, currentUser.id);
+            //    }
+            //}
         }return;
     }
 
