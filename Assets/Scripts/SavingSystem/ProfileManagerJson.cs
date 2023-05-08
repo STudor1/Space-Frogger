@@ -74,8 +74,8 @@ public class ProfileManagerJson : MonoBehaviour
     //Use this to reset profiles
     public void Reset()
     {
-        //PlayerPrefs.DeleteAll();
-        PlayerPrefs.DeleteKey("ProfileNo");
+        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteKey("ProfileNo");
         Debug.Log("Data has been reset");
     }
 

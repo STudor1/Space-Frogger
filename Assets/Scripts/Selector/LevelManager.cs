@@ -25,22 +25,40 @@ public class LevelManager : MonoBehaviour
 
         foreach (Achievement ach in currentUser.achievements)
         {
-            if (ach.Unlocked == false)
-            {
-                if (achString == null)
-                {
-                    achString ="-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
+            string achUnlocked = PlayerPrefs.GetString("AchUnlocked" + currentUser.id + ach.achID);
+            Debug.Log("hehe" + achUnlocked + "mate");
+            string achToAdd = "-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
 
-                }
-                else
-                {
-                    achString = achString + "\n" + "-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
-                }
+            if (achUnlocked != "")
+            {
+                Debug.Log("here?");
+                achString = achString + "\n" + achUnlocked;
+            }
+            else if (achUnlocked == achToAdd)
+            {
+
             }
             else
             {
-                achString = achString + "\n" + "-Achievement " + ach.achTitle + " is unlocked" + "\n" + ach.achDescription;
+                if (ach.Unlocked == false)
+                {
+                    if (achString == null)
+                    {
+                        achString = achToAdd;
+
+                    }
+                    else
+                    {
+                        achString = achString + "\n" + achToAdd;
+                    }
+                }
             }
+
+            
+            //else
+            //{
+            //    achString = achString + "\n" + "-Achievement " + ach.achTitle + " is unlocked" + "\n" + ach.achDescription;
+            //}
         }
 
         achText.SetText(achString);

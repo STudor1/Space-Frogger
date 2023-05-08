@@ -76,6 +76,7 @@ public class AchievementService : MonoBehaviour
                 {
                     ach.Unlock();
                     data.SaveTheData(currentUser, currentUser.id);
+                    PlayerPrefs.SetString("AchUnlocked" + currentUser.id + ach.achID, "-" + ach.achTitle + " is unlocked" + "\n" + ach.achDescription);
                 }
             }
         }
