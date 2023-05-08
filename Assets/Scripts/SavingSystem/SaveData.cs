@@ -66,13 +66,15 @@ public class SaveData : MonoBehaviour
             }
             else
             {
-                Debug.Log("Delete a profile to add a new one");
+                string error = "Max profiles reached";
+                usernameField.GetComponent<TMP_InputField>().text = error;
             }
-            
+
         }
         else
         {
-            Debug.Log("Enter a valid name");
+            string valid = "Enter a valid name";
+            usernameField.GetComponent<TMP_InputField>().text = valid;
         }
     }
 

@@ -70,35 +70,20 @@ public class AchievementService : MonoBehaviour
         if (!unlocked)
         {
             //unlock ach
-            //achievement.Unlock();
-            //for (int i = 0; i < currentUser.achievements.; i++)
-            //{
-            //    if (currentUser.achievements[i].achID == achievement.achID)
-            //    {
-            //        currentUser.achievements[i].Unlock();
-            //        Debug.Log(currentUser.achievements[i].Unlocked + " HEREEEEE");
-            //        data.SaveTheData(currentUser, currentUser.id);
-            //    }
-            //}
-
-            //foreach (Achievement ach in currentUser.achievements)
-            //{
-            //    if (ach.achTitle == achievement.achTitle)
-            //    {
-                    
-
-            //        ach.Unlock();
-            //        Debug.Log(ach.Unlocked + " HEREEEEE");
-            //        data.SaveTheData(currentUser, currentUser.id);
-            //    }
-            //}
-        }return;
+            foreach (Achievement ach in currentUser.achievements)
+            {
+                if (ach.achTitle == achievement.achTitle)
+                {
+                    ach.Unlock();
+                    data.SaveTheData(currentUser, currentUser.id);
+                }
+            }
+        }
+        return;
     }
 
     private bool CheckIfUnlocked(Achievement achievement)
     {
-        
-        //do check here
         return achievement.Unlocked;
     }
 }
