@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private TMP_Text achText;
     private int selectedProfile;
     private int levelsUnlocked;
     private SaveData data;
+    private string achString;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,34 +18,32 @@ public class LevelManager : MonoBehaviour
 
         UserProfile currentUser = data.LoadProfile(selectedProfile);
 
+        levelsUnlocked = currentUser.levelUnlocked;
         Debug.Log("Playing as " + currentUser.username);
-        Debug.Log("Levels unlocked " + currentUser.levelUnlocked);
         Debug.Log("Highscore " + currentUser.highscore);
 
-        //foreach (Achievement ach in currentUser.achievements)
-        //{
-        //    Debug.Log("Achievement " + ach.achID + " is unlocked " + ach.Unlocked);
-        //}
-        
 
-        //Debug.Log("Playing as " + PlayerPrefs.GetString("Username" + selectedProfile));
-        //Debug.Log("Levels unlocked " + PlayerPrefs.GetInt("levelUnlocked" + selectedProfile));
-        //levelsUnlocked = PlayerPrefs.GetInt("levelUnlocked" + selectedProfile);
-        //Debug.Log("Highscore " + PlayerPrefs.GetInt("Highscore" + selectedProfile));
+        foreach (Achievement ach in currentUser.achievements)
+        {
+            if (ach.Unlocked == false)
+            {
+                if (achString == null)
+                {
+                    achString ="-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
 
-        //Debug.Log("Achievements locked");
-        //for (int i = 0; i < PlayerPrefs.GetInt("ach.length" + selectedProfile); i++)
-        //{
-        //    Achievement ach = (Achievement)PlayerPrefs.GetString("ach" + selectedProfile);
+                }
+                else
+                {
+                    achString = achString + "\n" + "-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
+                }
+            }
+            else
+            {
+                achString = achString + "\n" + "-Achievement " + ach.achTitle + " is unlocked" + "\n" + ach.achDescription;
+            }
+        }
 
-        //}
-
-        //Debug.Log("Achievements unlocked");
-        //for (int i = 0; i < PlayerPrefs.GetInt("ach.length" + selectedProfile); i++)
-        //{
-
-        //}
-
+        achText.SetText(achString);
     }
 
 

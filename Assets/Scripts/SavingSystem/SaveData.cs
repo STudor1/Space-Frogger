@@ -27,7 +27,6 @@ public class SaveData : MonoBehaviour
             profileNo++;
             PlayerPrefs.SetInt("ProfileNo", profileNo);
         }
-        Debug.Log(profileNo);
         persistentPath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "ProfileData" + profileNo.ToString() + ".json";
     }
 
@@ -86,19 +85,7 @@ public class SaveData : MonoBehaviour
             string json = reader.ReadToEnd();
 
             UserProfile user = JsonUtility.FromJson<UserProfile>(json);
-            Debug.Log("Loading " + user.username);
-            Debug.Log("Loading " + user.highscore);
-            foreach (Achievement ach in user.achievements)
-            {
-                if (ach.Unlocked == false)
-                {
-                    Debug.Log("Loading: Achievement " + ach.achTitle + " is not unlocked");
-                }
-                else
-                {
-                    Debug.Log("Loading: Achievement " + ach.achTitle + " is unlocked");
-                }
-            }
+            
             return user;
         }
 
@@ -110,11 +97,6 @@ public class SaveData : MonoBehaviour
         string savePath = Application.persistentDataPath + Path.AltDirectorySeparatorChar + "ProfileData" + id.ToString() + ".json";
 
         string json = JsonUtility.ToJson(profile, true);
-        Debug.Log("Then here ");
-        foreach (Achievement ach in profile.achievements)
-        {
-            Debug.Log("Saving: Achievement " + ach.achTitle + " is unlocked " + ach.Unlocked);
-        }
 
         using (StreamWriter writer = new StreamWriter(savePath))
         {
