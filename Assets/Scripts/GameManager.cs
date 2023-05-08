@@ -1,5 +1,5 @@
 using System.Collections;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
@@ -273,6 +273,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Pressed it");
     }
 
-    
+    public void HomePress()
+    {
+        GameOver(); //to get the highscore and save it
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 
 }
