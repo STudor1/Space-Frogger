@@ -19,19 +19,19 @@ public class LevelManager : MonoBehaviour
         UserProfile currentUser = data.LoadProfile(selectedProfile);
 
         levelsUnlocked = currentUser.levelUnlocked;
-        Debug.Log("Playing as " + currentUser.username);
-        Debug.Log("Highscore " + currentUser.highscore);
+        //Debug.Log("Playing as " + currentUser.username);
+        //Debug.Log("Highscore " + currentUser.highscore);
 
 
         foreach (Achievement ach in currentUser.achievements)
         {
             string achUnlocked = PlayerPrefs.GetString("AchUnlocked" + currentUser.id + ach.achID);
-            Debug.Log("hehe" + achUnlocked + "mate");
+            //Debug.Log("hehe" + achUnlocked + "mate");
             string achToAdd = "-Achievement " + ach.achTitle + " is not unlocked" + "\n" + ach.achDescription;
 
             if (achUnlocked != "")
             {
-                Debug.Log("here?");
+                //Debug.Log("here?");
                 achString = achString + "\n" + achUnlocked;
             }
             else if (achUnlocked == achToAdd)

@@ -918,9 +918,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf61bf7d4b6e6204a9631cdc83a182c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 1596274303}
   buttonPrefab: {fileID: 5530832111461252511, guid: c00dd512a730064408887cd173504b82, type: 3}
   canvas: {fileID: 1007472967}
-  data: {fileID: 1596274303}
 --- !u!1 &775461061
 GameObject:
   m_ObjectHideFlags: 0

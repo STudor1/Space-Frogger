@@ -207,7 +207,11 @@ public class GameManager : MonoBehaviour
 
     private bool LevelCleared()
     {
-
+        if (homes.Length == 0)
+        {
+            homes = FindObjectsOfType<Home>();
+        }
+        
         for (int i = 0; i < homes.Length; i++)
         {
             if (!homes[i].enabled)
@@ -276,7 +280,7 @@ public class GameManager : MonoBehaviour
     public void HomePress()
     {
         GameOver(); //to get the highscore and save it
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("SelectLevel");
     }
 
 }

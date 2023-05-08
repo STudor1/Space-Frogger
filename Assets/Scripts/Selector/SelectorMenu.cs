@@ -7,6 +7,10 @@ public class SelectorMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Lvl1");
     }
+    public void PlayTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 
     public void GoBackToProfiles()
     {
