@@ -46,9 +46,11 @@ public class MoveCommand : Command
         }
         else
         {
+            Debug.Log(destination.y + " " + _farthestRow);
+
             if (destination.y > _farthestRow)
             {
-                _farthestRow = destination.y;
+                _frogger.farthestRow = destination.y;
                 _manager.AdvancedRow();
             }
             _frogger.StartCoroutine(_frogger.Leap(destination));
@@ -85,11 +87,11 @@ public class MoveCommand : Command
         }
         else
         {
-            if (destination.y > _farthestRow)
-            {
-                _farthestRow = destination.y;
-                _manager.AdvancedRow();
-            }
+            //if (destination.y > _farthestRow)
+            //{
+            //    _farthestRow = destination.y;
+            //    _manager.AdvancedRow();
+            //}
             _frogger.StartCoroutine(_frogger.Leap(destination));
         }
 

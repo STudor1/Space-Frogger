@@ -17,7 +17,7 @@ public class Frogger : MonoBehaviour, IEntity
     [SerializeField] private Sprite deadSprite;
 
     private Vector3 spawnPosition;
-    private float farthestRow;
+    public float farthestRow;
     private bool isPaused;
     private int deathCount;
     private int selectedProfile;
